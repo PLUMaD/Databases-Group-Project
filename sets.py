@@ -43,11 +43,19 @@ SORT_BY_PARAMS = set(["nameOfChoices", "choiceData",
 SORT_DIR_PARAMS = set(["asc", "desc"])
 
 
-def update_select(cur:cursor, nameOfChoices:str, choiceData:str,selectedNumTimes:int,id:int
+def update_id(cur:cursor, nameOfChoices:str, choiceData:str,selectedNumTimes:int,id:int
     cur.execute(f"""
         update choiceData
         set id = id
         where id = null
+    """)
+)
+
+def update_table(cur.cursor,table:str,nameOfChoices:str, choiceData:str,selectedNumTimes:int,id:int
+    cur.execute("""
+        update table
+        set column=nameOfChoices
+        where column=null
     """)
 )
 
