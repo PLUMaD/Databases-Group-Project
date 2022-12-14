@@ -33,7 +33,7 @@ def search_sets_html():
                               limit=limit, offset=offset, sort_by= sort_by, sort_dir=sort_dir)
         queryCounter +=1
         page_count  = int(math.round(count/limit))
-        return render_template('sets.html', count=count, results=results, nameOfChoices=nameOfChoices, choiceData = choiceData,
+        return render_template('choice_display.html', count=count, results=results, nameOfChoices=nameOfChoices, choiceData = choiceData,
         page=page, limit=limit, sort_by = sort_by, sort_dir=sort_dir, page_count = page_count)
 
 # valid sort params for search_sets function
@@ -43,15 +43,11 @@ SORT_BY_PARAMS = set(["nameOfChoices", "choiceData",
 SORT_DIR_PARAMS = set(["asc", "desc"])
 
 
-def update_select(cur:cursor,
-                nameOfChoices:str,
-                choiceData:str,
+def update_select(cur:cursor, nameOfChoices:str, choiceData:str,selectedNumTimes:int,id:int
     cur.execute(f"""
-        SELECT @n := @n + 1 n,
-        nameOfChoices, 
-        choiceData
-        FROM choiceTable, (SELECT @n := 0) m
-        ORDER BY nameOfChoices, choiceData
+        update choiceData
+        set id = id
+        where id = null
     """)
 )
 
@@ -69,36 +65,34 @@ def search_sets(cur: cursor,
 
     # these values can't easily be parameterized into the sql query, so we need to sanitize them
     # before interoplating them to protect against SQL injection
-    assert int(limit) >= 0
-    assert int(offset) >= 0
-    assert sort_by in SORT_BY_PARAMS
-    assert sort_dir in SORT_DIR_PARAMS
+#     assert int(limit) >= 0
+#     assert int(offset) >= 0
+#     assert sort_by in SORT_BY_PARAMS
+#     assert sort_dir in SORT_DIR_PARAMS
 
     cur.execute(f"""
-select s.nameOfChoices as nameOfChoices,
-    s.choiceData as choiceData,
-from set s
-    inner join choiceData d on s.nameOfChoices = d.id
-where lower(s.nameOfChoices) like lower(%(nameOfChoices_param)s)
-    and lower(d.choiceData) like lower(%(choiceData_param)s)
-order by {sort_by} {sort_dir}
-limit {limit}
-offset {offset}
+        select s.nameOfChoices as nameOfChoices,
+        s.choiceData as choiceData,
+        from set s
+        inner join choiceData d on s.nameOfChoices = d.id
+        where lower(s.nameOfChoices) like lower(%(nameOfChoices_param)s)
+        and lower(d.choiceData) like lower(%(choiceData_param)s)
+        order by {sort_by} {sort_dir}
+        limit {limit}
+        offset {offset}
     """, {
         'nameOfChoices_param': f"%{nameOfChoices_contains or ''}%",
         'choiceData_param': f"%{choiceData_contains or ''}%",
     })
-    return list(cur)
-
-
+return list(cur)
 
 def count_sets(cur: cursor,
-               nameOfChoices: str,
-               choiceData: str,
+               nameOfChoices_contains: str,
+               choiceData_contains: str) -> list[dict[str, str]]:
     cur.execute("""
 select count(*)
 from set s
-    inner join choiceData d on s.nameOfChoices = d.id
+    inner join choiceData t on s.choiceData_id = t.id
 where lower(s.nameOfChoices) like lower(%(nameOfChoices_param)s)
     and lower(t.nameOfChoices) like lower(%(choiceData_param)s)
     """, {
@@ -106,5 +100,3 @@ where lower(s.nameOfChoices) like lower(%(nameOfChoices_param)s)
         'choiceData_param': f"%{choiceData_contains or ''}%",
     })
     return cur.fetchone()['count']
-
-
