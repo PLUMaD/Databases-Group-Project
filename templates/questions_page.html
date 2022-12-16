@@ -14,10 +14,31 @@
   </h1>
 
   <div class="flex-parent jc-center">
-    <button type="submit" class="btn left">Cat</button>
-    <button type="submit" class="btn right">Longer Cat</button>
+    <button type="submit" class="btn left" id="left">Cat</button>
+    <button type="submit" class="btn right" id="right">Longer Cat</button>
   </div>
 
+    <p> <h1> Cat Clicked by <span id="displayl">0</span> People</h1></p>
+    <script type="text/javascript">
+        var countleft = 0;
+        var left = document.getElementById("left");
+        var displ = document.getElementById("displayl");
+        left.onclick = function () {
+            countleft++;
+            displ.innerHTML = countleft;
+        } </script>
+  
+  <p> <h1> Longer Cat Clicked by <span id="displayr">0</span> People</h1></p>
+    <script type="text/javascript">
+        var countright = 0;
+        var right = document.getElementById("right");
+        var dispr = document.getElementById("displayr");
+        right.onclick = function () {
+            countright++;
+            dispr.innerHTML = countright;
+        } </script>
+    
+  
   <div class="footer">
   </div>
 
