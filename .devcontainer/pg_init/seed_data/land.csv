@@ -1,0 +1,3 @@
+landID, landType, landOptionLeft, landCountLeft, landSubCategoryLeft, landOptionRight, landCountRight, landSubCategoryRight
+0, pet, koala, 1, null, panda, 1, null
+1, feed, hamster, 1, pets, rat, 1, pets

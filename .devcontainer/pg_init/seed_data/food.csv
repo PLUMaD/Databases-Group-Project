@@ -1,0 +1,3 @@
+foodID, foodType, foodOptionLeft, foodCountLeft, foodSubCategoryLeft, foodOptionRight, foodCountRight, foodSubCategoryRight
+0, eat, fried chicken, 1, null, pork cutlet, 1, null
+1, drink, turtle soup, 1, exotic, beef stew, 1, land
