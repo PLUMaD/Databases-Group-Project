@@ -1,0 +1,4 @@
+animalsID, animalsType, animalsOptionLeft, animalsCountLeft, animalsSubCategoryLeft, animalsOptionRight, animalsCountRight, animalsSubCategoryRight
+0, see, chicken, 1, food, pig, 1, food
+1, hold, baby chicken, 1, food, puppy, 1, pets
+2, own, turtle, 1, exotic, Water Dragon, 1, exotic

@@ -1,0 +1,4 @@
+petsID, petsType, petsOptionLeft, petsCountLeft, petsSubCategoryLeft, petsOptionRight, petsCountRight, petsSubCategoryRight
+0, hug, puppy, 1, puppies, kitten, 1, kitties
+1, pet, puppy, 1, puppies, rat, 1, rats
+2, hug, kitten, 1, kitties, rat, 1, rats
