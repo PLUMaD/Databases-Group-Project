@@ -9,13 +9,22 @@
 </head>
 <body> 
   <h1 class="fancy">
+    Would you rather {% for key, value in {{select}}.iteritems()%} {% if key=="{{table_name}}Type" %} "{{value}}"{% endif %} {% endfor %}
     Keyword
     Topic
   </h1>
 
   <div class="flex-parent jc-center">
-    <button type="submit" class="btn left">Cat</button>
-    <button type="submit" class="btn right">Longer Cat</button>
+    <button type="submit" class="btn left">
+      <input type="hidden" name="table_name" value="{{table_name}}"/>
+      <input type="hidden" name="row_id" value="{{row_id}}" />
+      {% for key, value in {{select}}.iteritems()%} {% if key=="{{table_name}}OptionLeft" %} "{{value}}"{% endif %} {% endfor %}
+    </button>
+      or a  
+    <button type="submit" class="btn right">
+      {% for key, value in {{select}}.iteritems()%} {% if key=="{{table_name}}OptionRight" %} "{{value}}"{% endif %} {% endfor %}
+      Longer Cat
+    </button>
   </div>
 
   <div class="footer">

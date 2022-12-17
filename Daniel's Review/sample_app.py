@@ -1,9 +1,8 @@
 import psycopg2
 from flask import Flask, render_template, request
 from psycopg2.extras import RealDictCursor
-
-from sets import select_page_data, update_choice_count, TABLE_NAME_PARAMS
-from util import safe_int, within_valid_values
+from util import safe_int
+from sets import count_sets, search_sets, select_page_data, update_choice_count
 
 conn = psycopg2.connect(
     "host=db dbname=postgres user=postgres password=postgres",
@@ -21,18 +20,16 @@ def instructions():
 def would_you_rather():
     #The table we will query for the page data
     #The page data includes the button options, the verb for the question, and the options' counts
-    table_name_temp = request.args.get('table_name', 'animals')
-    table_name = within_valid_values(table_name_temp, TABLE_NAME_PARAMS, 'animals')
+    table_name = request.args.get('table_name', 'animals')
     #The html page with a question should ask for a question ID to Display from a given table
     row_id = request.args.get('id', 0)
     with conn.cursor() as cur:
         #Calls set.py for the select sql to grab table data
         select = select_page_data(cur, table_name = table_name, requested_page_id = row_id)
         #Calls set.py for the update_choice_count function
-        option_dir = request.args.get('option_dir', 'left')
-        update = update_choice_count(cur, table_name = table_name, left_right=option_dir)
+        update = update_choice_count(cur, table_name = table_name)
         #Renders html using given data
-        return render_template('questions_page.html', table_name = table_name, row_id = row_id, update = update, select = select)
+        return render_template('questions_page.html', table_name = table_name, update = update, select = select)
 
 #The page with the percentage results from the question
 @app.route('/test/results')
@@ -42,8 +39,7 @@ def results():
     #return(render_template('q', table_name = table_name, select = select, QUERY_NAME=PUT HERE))
 
     #The table we will query for the page data
-    table_name_temp = request.args.get('table_name', 'animals')
-    table_name = within_valid_values(table_name_temp, TABLE_NAME_PARAMS, 'animals')
+    table_name = request.args.get('table_name', 'animals')
     #The page data id to get a specific row from the table above
     row_id = request.args.get('id', 0)
     #The html page with a question should ask for a question ID to Display from a given table
@@ -51,4 +47,4 @@ def results():
         #Calls set.py for the select sql to grab table data
         select = select_page_data(cur, table_name = table_name, requested_page_id = row_id)
         #Renders html using given data
-        return render_template('', table_name = table_name, select = select)
+        return render_template('q', table_name = table_name, select = select)

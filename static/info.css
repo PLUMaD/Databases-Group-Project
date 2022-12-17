@@ -4,7 +4,21 @@ body {
   color: white;
   text-align: center;
 }
-
+.play {
+  border: 2px solid rgb(168, 137, 0);
+  border-radius: 1000px;
+  background-color: rgb(255, 220, 67);
+  color: black;
+  font-size: 3vw;
+  padding: 1vw;
+  margin: 1vw;
+  cursor: pointer;
+  display: inline-block;
+}
+.play:hover {
+  border: 2px solid rgb(255, 222, 77);
+  background: rgb(255, 238, 0);
+}
 h2 {
   font-size: 2vw;
   margin-top: 0;
@@ -12,7 +26,7 @@ h2 {
 }
 h3 {
   text-shadow: 0.1vw 0.1vw black;
-  color: rgb(143, 236, 36);
+  color: rgb(36, 230, 78);
   margin-top: 0vw;
   margin-bottom: 0.8vw;
 }
@@ -25,7 +39,7 @@ h3 {
 .flex-parent {
   display: flex;
   text-shadow: 0.15vw 0.14vw black;
-  color: yellow;
+  color: red;
   margin: 0vw;
   padding: 0vw;
 }
@@ -33,9 +47,11 @@ h3 {
   justify-content: center;
 }
 
+
 .info {
   margin-top: 10vw;
 }
+
 .footer {
   position: fixed;
   bottom: 0;

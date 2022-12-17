@@ -7,38 +7,43 @@
     <title>Info - Decision Domain</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='info.css') }}">
 </head>
-<body>  
+<body>
   <h1 class="fancy">How to Play</h1>
-  
+
   <div class="flex-parent jc-center">
     <h2>Rule #1</h2>
   </div>
-  <h3>Click one of two buttons.</h3>
+  <h3>A question will be shown with an inserted word from the database.</h3>
 
   <div class="flex-parent jc-center">
     <h2>Rule #2</h2>
   </div>
-  <h3>Be honest with your selection.</h3>
+  <h3>Below, two buttons will also hold choices given by the database.</h3>
 
   <div class="flex-parent jc-center">
     <h2>Rule #3</h2>
   </div>
-  <h3>Enjoy your time here.</h3>
-  
+  <h3>After clicking on one, you will be given the proportion of people who choose the different options.</h3>
+ 
+  <br><br>
+  <a href="question">
+      <input type="submit" class="btn play" id="playbut"/>
+  </a>
+
   <div class="info">
     <div class="flex-parent jc-center">
-      <h2>What is this game?</h2> <br>
+      <h2>What is this game?</h2>
     </div>
 
     <h3>This is an HTML endpoint that directs the user to various pages according to 
-   their choice of two options.  
+   their choice of two options.
     </h3>
     <h3>Options are designed like a tree, expanding upon the previous to produce more detailed  data on a given topic and keyword.
     </h3>
     <h3>Choices are saved to our database and are displayed on a results page following the user's selection.
     </h3>
   </div>
-  
+
   <div class="footer">
   </div>
 
