@@ -1,8 +1,9 @@
 import psycopg2
 from flask import Flask, render_template, request
 from psycopg2.extras import RealDictCursor
-from utils import safe_int
-from sets import count_sets, search_sets, select_page_data, update_choice_count
+
+from sets import select_page_data, update_choice_count, TABLE_NAME_PARAMS
+from util import safe_int, within_valid_values
 
 conn = psycopg2.connect(
     "host=db dbname=postgres user=postgres password=postgres",
@@ -20,16 +21,18 @@ def instructions():
 def would_you_rather():
     #The table we will query for the page data
     #The page data includes the button options, the verb for the question, and the options' counts
-    table_name = request.args.get('table_name', 'animals')
+    table_name_temp = request.args.get('table_name', 'animals')
+    table_name = within_valid_values(table_name_temp, TABLE_NAME_PARAMS, 'animals')
     #The html page with a question should ask for a question ID to Display from a given table
     row_id = request.args.get('id', 0)
     with conn.cursor() as cur:
         #Calls set.py for the select sql to grab table data
         select = select_page_data(cur, table_name = table_name, requested_page_id = row_id)
         #Calls set.py for the update_choice_count function
-        update = update_choice_count(cur, table_name = table_name)
+        option_dir = request.args.get('option_dir', 'left')
+        update = update_choice_count(cur, table_name = table_name, left_right=option_dir)
         #Renders html using given data
-        return render_template('questions_page.html', table_name = table_name, update = update, select = select)
+        return render_template('questions_page.html', table_name = table_name, row_id = row_id, update = update, select = select)
 
 #The page with the percentage results from the question
 @app.route('/test/results')
@@ -39,7 +42,8 @@ def results():
     #return(render_template('q', table_name = table_name, select = select, QUERY_NAME=PUT HERE))
 
     #The table we will query for the page data
-    table_name = request.args.get('table_name', 'animals')
+    table_name_temp = request.args.get('table_name', 'animals')
+    table_name = within_valid_values(table_name_temp, TABLE_NAME_PARAMS, 'animals')
     #The page data id to get a specific row from the table above
     row_id = request.args.get('id', 0)
     #The html page with a question should ask for a question ID to Display from a given table
@@ -47,65 +51,4 @@ def results():
         #Calls set.py for the select sql to grab table data
         select = select_page_data(cur, table_name = table_name, requested_page_id = row_id)
         #Renders html using given data
-        return render_template('q', table_name = table_name, select = select)
-
-
-
-
-
-# import psycopg2
-# from flask import Flask, render_template, request
-# from psycopg2.extras import RealDictCursor
-# from util import safe_int, safe_sort_by, safe_sort_dir
-# from sets import count_sets, search_sets
-
-# from choices import nameOfChoices
-
-# conn = psycopg2.connect(
-#     "host=db dbname=postgres user=postgres password=postgres",
-#     cursor_factory=RealDictCursor)
-# app = Flask(__name__)
-
-# # TODO: create /sets HTML endpoint
-# @app.route('/sets')
-# def search_sets_html():
-#     print(request.args)
-#     nameOfChoices = request.args.get('nameOfChoices', '')
-#     choiceData = request.args.get('s.choiceData', '')
-#     selectedNumTimes = request.args.get('selectedNumTimes', '')
-#     page = safe_int(request.args.get('page'), 1)
-#     limit = safe_int(request.args.get('results_per_page'),50)
-#     offset =  (page -1) * limit
-#     safe_sort_by = safe_sort_by(request.args.get('safe_sort_by'), 'set_name')
-#     safe_sort_dir  = safe_sort_dir(request.args.get('safe_sort_dir'), 'asc')
-#     page_count = safe_int(request.args.get('page_count', 1))
-#     if page_count is None:
-#         page_count = 1            
-
-#     with conn.cursor() as cur:
-#         count = count_sets(cur, nameOfChoices = nameOfChoices, choiceData = choiceData, selectedNumTimes = selectedNumTimes,
-#                 page = page, limit = limit, offset = offset, safe_sort_by = 'set_name', safe_sort_dir = 'asc')
-#         results = search_sets(cur, nameOfChoices = nameOfChoices, choiceData = choiceData, selectedNumTimes = selectedNumTimes,
-#                 page = page, limit = limit, offset = offset, safe_sort_by = 'set_name', safe_sort_dir = 'asc')
-#         return render_template('choice_display.html', nameOfChoices = nameOfChoices, choiceData = choiceData, selectedNumTimes = selectedNumTimes,
-#                 page = page, offset = offset)
-
-# def update_id(cur.cursor, nameOfChoices:str, choiceData:str,
-#                 selectedNumTimes:int, id:int
-#     cur.execute(f"""
-#         update choiceData
-#         set id = id
-#         where id = null
-#     """)
-# )
-
-# def update_table(cur.cursor, table:str, nameOfChoices:str, 
-#                 choiceData:str,selectedNumTimes:int,id:int
-#     cur.execute("""
-#         update table
-#         set column=nameOfChoices
-#         where column=null
-#     """)
-# )
-
-
+        return render_template('', table_name = table_name, select = select)

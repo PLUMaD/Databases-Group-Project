@@ -11,12 +11,37 @@
   <h1 class="fancy">Results</h1>
 
   <div class="flex-parent jc-center">
-    <button type="submit" class="btn left">Cat <br>
-      <h6>35 People</h6>
+    <input type="hidden" name="table_name" value="{{table_name}}"/>
+    <input type="hidden" name="row_id" value="{{row_id}}"/>
+
+    <button type="submit" class="btn left">
+      {% for key, value in {{select}}.iteritems()%} 
+      {% if key=="{{table_name}}OptionLeft" %} 
+      "{{value}}"
+      {% endif %} 
+      {% endfor %}<br>
+      <h6>
+        {% for key, value in {{select}}.iteritems()%} 
+        {% if key=="{{table_name}}CountLeft" %} 
+        "{{value}}"
+        {% endif %} 
+        {% endfor %}
+      </h6>
     </button>
     
-    <button type="submit" class="btn right">Longer Cat<br>
-      <h6>65 People</h6>
+    <button type="submit" class="btn right">
+      {% for key, value in {{select}}.iteritems()%} 
+      {% if key=="{{table_name}}OptionRight" %} 
+      "{{value}}"
+      {% endif %} 
+      {% endfor %}<br><br>
+      <h6>
+        {% for key, value in {{select}}.iteritems()%} 
+        {% if key=="{{table_name}}CountRight" %} 
+        "{{value}}"
+        {% endif %} 
+        {% endfor %}
+      </h6>
     </button>
   </div>
 

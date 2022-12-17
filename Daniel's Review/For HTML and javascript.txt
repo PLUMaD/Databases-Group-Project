@@ -7,3 +7,8 @@ not expect to work through last night.
 
 I will jump into our discord right when I wake, so if I am needed for anything or can help,
 just fill me in and I'll get to work.
+
+We can explain each page in more detail.
+Like, the Page title will ask a question using a keyword and topic. Based on the given keyword and topic, you will get two options.
+Clicking on an option answers the question for the page and you will be shown the amount of people who chose like you.
+From there, the question and options will update based on your answer to the previous question.
