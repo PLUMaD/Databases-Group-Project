@@ -1,0 +1,13 @@
+We need to have defined functions for the app.py to call in order to use SQL.
+
+I think we only need update and select, but that may be too easy. 
+If you are concerned, please discuss. 
+
+I may be asleep during the meeting, as when I checked the app.py and sets.py, I saw they had many errors in VSCode.
+I worked all night and may actually sleep through the day. I apologize.
+
+If more SQL is needed, the zybook and a google chrome extension called grepper are good sources.
+You can also ask Professor.
+
+Also, I noticed I could have made all of my tables use the same column names, and made the SQL easier to use.
+If you decide to do that, please be sure to update the csv files, create tables SQL, and the insert rows SQL.

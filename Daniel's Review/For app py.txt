@@ -1,0 +1,9 @@
+We will likely need three route statements for the three types of pages:
+I made a quick sample in this folder
+
+The imports on my end need pylint to be rerouted to our project directory.
+If that is a problem when tested, please message professor in discord for help, immediately.
+The deadline is close, so we can't be messing around, as this is our final.
+
+Also, the sample will probbly need to be moved out from this Daniel's Review folder 
+to where the actual app.py is to import the utils folder and access the sample sets.py
